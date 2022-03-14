@@ -1,5 +1,5 @@
 APP_NAME = main
-LIB_NAME = libmain
+LIB_NAME = libmake
 
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -I src -MP -MMD
