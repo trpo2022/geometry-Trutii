@@ -1,44 +1,27 @@
-APP_NAME = main
-LIB_NAME = libmake
-
 CFLAGS = -Wall -Wextra -Werror
-CPPFLAGS = -I src -MP -MMD
-LDFLAGS =
-LDLIBS =
 
-BIN_DIR = bin
-OBJ_DIR = obj
-SRC_DIR = src
+all: main
 
-APP_PATH = $(BIN_DIR)/$(APP_NAME)
-LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
+main: bin/main
 
-SRC_EXT = c
+bin/main: obj/src/main/main.o obj/src/libmake/libmake.a
+	gcc $(CFLAGS) -o $@ $^ -lm
 
-APP_SOURCES = $(shell find $(SRC_DIR)/$(APP_NAME) -name '*.$(SRC_EXT)')
-APP_OBJECTS = $(APP_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
+obj/src/main/main.o: src/main/main.c
+	gcc -c -I src $(CFLAGS) -o $@ $< -lm
 
-LIB_SOURCES = $(shell find $(SRC_DIR)/$(LIB_NAME) -name '*.$(SRC_EXT)')
-LIB_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
-
-DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d)
-
-.PHONY: all
-all: $(APP_PATH)
-
--include $(DEPS)
-
-$(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $^ -o $@ $(LDFLAGS) $(LDLIBS)
-
-$(LIB_PATH): $(LIB_OBJECTS)
+obj/src/libmake/libmake.a: obj/src/libmake/circle.o obj/src/libmake/triangle.o
 	ar rcs $@ $^
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+obj/src/libmake/circle.o: src/libmake/circle.c
+	gcc -c -I src $(CFLAGS) -o $@ $< -lm
+
+obj/src/libmake/triangle.o: src/libmake/triangle.c
+	gcc -c -I src $(CFLAGS) -o $@ $< -lm
+
 
 .PHONY: clean
+
 clean:
-	$(RM) $(APP_PATH) $(LIB_PATH)
-	find $(OBJ_DIR) -name '*.o' -exec $(RM) '{}' \;
-	find $(OBJ_DIR) -name '*.d' -exec $(RM) '{}' \;
+	rm obj/src/libmake/*.a obj/src/libmake/*.o obj/src/main/*.o bin/main
