@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+#ifndef CTEST_H
 #define CTEST_H
 
 #ifdef __cplusplus
@@ -584,3 +585,6 @@ __attribute__((no_sanitize_address)) int ctest_main(int argc, const char *argv[]
 #ifdef __cplusplus
 }
 #endif
+
+#endif
+
