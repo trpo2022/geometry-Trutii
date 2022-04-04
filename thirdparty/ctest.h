@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-#ifndef CTEST_H
 #define CTEST_H
 
 #ifdef __cplusplus
