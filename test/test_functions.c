@@ -9,7 +9,6 @@
 float intersects[size_intersects];
 float circle_points[size_circle];
 float triangle_points[size_triangle];
-
 CTEST(geometry_suite, simple_intersection_0)
 {
     const int exp = 0;
