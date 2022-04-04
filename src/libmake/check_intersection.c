@@ -1,6 +1,6 @@
-#include "perimetr_aria_figures.h"
-#include "Read.h"
 #include "check_intersection.h"
+#include "Read.h"
+#include "perimetr_aria_figures.h"
 #include <math.h>
 #include <stdio.h>
 int cross(float all[])
